@@ -1,7 +1,4 @@
-﻿using BasicSettings.Models;
-using Microsoft.Data.SqlClient;
-
-namespace BasicSettings.DataLayer.Repository
+﻿namespace BasicSettings.DataLayer.Repository
 {
     internal class UnitOfWork : IUnitOfWork
     {

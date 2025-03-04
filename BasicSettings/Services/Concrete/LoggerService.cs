@@ -1,12 +1,4 @@
-﻿using BasicSettings.Services.Contract;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BasicSettings.Services.Concrete
+﻿namespace BasicSettings.Services.Concrete
 {
     public class LoggerService : ILoggerService
     {

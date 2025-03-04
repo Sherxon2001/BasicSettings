@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace BasicSettings.DataLayer.Repository.Repositories
+﻿namespace BasicSettings.DataLayer.Repository.Repositories
 {
     public class CustomeIdentityUserRepository : RepositoryBase<CustomeIdentityUser>, ICustomeIdentityUserRepository
     {

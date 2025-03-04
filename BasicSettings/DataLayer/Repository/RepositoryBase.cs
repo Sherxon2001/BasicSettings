@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace BasicSettings.DataLayer.Repository
+﻿namespace BasicSettings.DataLayer.Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

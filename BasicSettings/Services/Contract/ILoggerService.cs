@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.Services.Contract
+﻿Snamespace BasicSettings.Services.Contract
 {
     public interface ILoggerService
     {

@@ -33,3 +33,6 @@ global using System.Diagnostics;
 global using BasicSettings.DataLayer.Repository.Repositories;
 global using BasicSettings.DataLayer.Repository;
 global using BasicSettings.Constants;
+global using Microsoft.Data.SqlClient;
+global using Newtonsoft.Json;
+global using Microsoft.Extensions.Logging;
