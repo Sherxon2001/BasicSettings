@@ -21,7 +21,7 @@
 
 
         #region repositories
-        ICustomeIdentityUserRepository CustomeIdentityUserRepository { get; }
+        IUserRepository UserRepository { get; }
         ICacheRepository CacheRepository { get; }
         IHttpContextAccessorCustome HttpContextAccessor { get; }
         IIdentityUserRepository IdentityUserRepository { get; }

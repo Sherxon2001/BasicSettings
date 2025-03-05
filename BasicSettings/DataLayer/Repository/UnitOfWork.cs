@@ -21,7 +21,7 @@ namespace BasicSettings.DataLayer.Repository
         #region repositories
         public ISystemTaskRepository SystemTaskRepository { get => GetRepository<ISystemTaskRepository>(); }
         public IIdentityUserRepository IdentityUserRepository { get => GetRepository<IIdentityUserRepository>(); }
-        public ICustomeIdentityUserRepository CustomeIdentityUserRepository { get => GetRepository<ICustomeIdentityUserRepository>(); }
+        public IUserRepository UserRepository { get => GetRepository<IUserRepository>(); }
         public ICacheRepository CacheRepository { get => GetRepository<ICacheRepository>(); }
         public IHttpContextAccessorCustome HttpContextAccessor { get => GetRepository<IHttpContextAccessorCustome>(); }
         public IRoleProfilesRepository RoleProfilesRepository { get => GetRepository<IRoleProfilesRepository>(); }

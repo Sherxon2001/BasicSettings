@@ -1,10 +1,10 @@
 ﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
 {
-    public class CustomeIdentityUserRepository : RepositoryBase<CustomeIdentityUser>, ICustomeIdentityUserRepository
+    public class UserRepository : RepositoryBase<CustomeIdentityUser>, IUserRepository
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CustomeIdentityUserRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public UserRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

@@ -1,6 +1,6 @@
 ﻿namespace BasicSettings.DataLayer.Repository.Repositories.Contract
 {
-    public interface ICustomeIdentityUserRepository : IRepositoryBase<CustomeIdentityUser>
+    public interface IUserRepository : IRepositoryBase<CustomeIdentityUser>
     {
         Task<CustomeIdentityUser> GetByEmail(string email);
         Task<CustomeIdentityUser> GetUserById(long userId);
