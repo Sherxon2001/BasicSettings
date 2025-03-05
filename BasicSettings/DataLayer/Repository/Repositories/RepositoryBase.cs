@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.DataLayer.Repository
+﻿namespace BasicSettings.DataLayer.Repository.Repositories
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
@@ -6,7 +6,7 @@
 
         public RepositoryBase(IUnitOfWork unitOfWork)
         {
-            this._unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IDbConnection DbConnection => _unitOfWork.DbConnection;
@@ -18,7 +18,7 @@
 
         public Task AddRangeAsync(IEnumerable<T> entities) => _unitOfWork.Context.Set<T>().AddRangeAsync(entities);
 
-        public T? FirstOrDefault(Expression<Func<T, bool>>? predicate = null, bool tracking = true, params Expression<Func<T, object>>[] includes)
+        public T? FirstOrDefault(Expression<Func<T, bool>>? predicate = null, bool tracking = false, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _unitOfWork.Context.Set<T>();
             if (!tracking)
@@ -28,7 +28,7 @@
             return predicate != null ? query.FirstOrDefault(predicate) : query.FirstOrDefault();
         }
 
-        public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>>? predicate = null, bool tracking = true, params Expression<Func<T, object>>[] includes)
+        public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>>? predicate = null, bool tracking = false, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _unitOfWork.Context.Set<T>();
             if (!tracking)
@@ -46,7 +46,7 @@
 
         public void UpdateRange(IEnumerable<T> entities) => _unitOfWork.Context.Set<T>().UpdateRange(entities);
 
-        public IQueryable<T> Where(Expression<Func<T, bool>> predicate, bool tracking = true, params Expression<Func<T, object>>[] includes)
+        public IQueryable<T> Where(Expression<Func<T, bool>> predicate, bool tracking = false, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _unitOfWork.Context.Set<T>().Where(predicate);
             if (!tracking)

@@ -1,4 +1,7 @@
-﻿namespace BasicSettings.DataLayer.Repository
+﻿using BasicSettings.DataLayer.Repository.Repositories.Concrete;
+using BasicSettings.Models.Additional;
+
+namespace BasicSettings.DataLayer.Repository
 {
     internal class UnitOfWork : IUnitOfWork
     {
@@ -17,6 +20,7 @@
         public TRepository GetRepository<TRepository>() => _serviceProvider.GetRequiredService<TRepository>();
 
         #region repositories
+        public IAuthRepository AuthRepository { get => GetRepository<IAuthRepository>(); }
         public ICustomeIdentityUserRepository CustomeIdentityUserRepository { get => GetRepository<ICustomeIdentityUserRepository>(); }
         public ICacheRepository CacheRepository { get => GetRepository<ICacheRepository>(); }
         public IHttpContextAccessorCustome HttpContextAccessor { get => GetRepository<IHttpContextAccessorCustome>(); }

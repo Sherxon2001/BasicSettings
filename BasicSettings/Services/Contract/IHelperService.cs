@@ -2,5 +2,6 @@
 {
     public interface IHelperService
     {
+        void UpdatePermissionCheckFromCache(int roleId);
     }
 }

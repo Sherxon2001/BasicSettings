@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.Models
+﻿namespace BasicSettings.Models.Additional
 {
     public class TokenDto
     {

@@ -6,7 +6,7 @@
         public int RoleId { get; set; }
 
         [ForeignKey(nameof(TaskId))]
-        public SystemTasks SystemTask { get; set; }
+        public SystemTasks SystemTasks { get; set; }
         [ForeignKey(nameof(RoleId))]
         public CustomeIdentityRole Role { get; set; }
     }

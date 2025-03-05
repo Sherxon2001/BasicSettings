@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.Services.Client
+﻿using BasicSettings.Models.Additional;
+
+namespace BasicSettings.Services.Client
 {
     public class IntegrationClient
     {

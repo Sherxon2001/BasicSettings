@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.Services.Contract
+﻿using BasicSettings.Models.Additional;
+
+namespace BasicSettings.Services.Contract
 {
     public interface IAccountService
     {

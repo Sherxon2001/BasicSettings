@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.Services.Concrete
+﻿using BasicSettings.Models.Additional;
+
+namespace BasicSettings.Services.Concrete
 {
     public class AccountService : IAccountService
     {
@@ -16,7 +18,7 @@
             var _state = StateModel<TokenDto>.Create();
             try
             {
-                var userId = _unitOfWork.HttpContextAccessor.GetUserId();
+                var userId = _unitOfWork.HttpContextAccessor.GetUserId() ?? 0;
 
                 var user = await _unitOfWork.CustomeIdentityUserRepository.GetUserById(userId);
 
@@ -140,9 +142,9 @@
                     new Claim(ClaimTypes.Name, user.NormalizedUserName),
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, refreshToken),
-                    new Claim(AuthConstants.AUTH_USER_ROLES, roles),
-                    new Claim(AuthConstants.REGION_ID, user.RegionId?.ToString() ?? string.Empty),
-                    new Claim(AuthConstants.DISTRICT_ID, user.DistrictId ?.ToString() ?? string.Empty)
+                    new Claim(AuthConstIds.USER_ROLES, roles),
+                    new Claim(AuthConstIds.USER_REGION_ID, user.RegionId?.ToString() ?? string.Empty),
+                    new Claim(AuthConstIds.USER_DISTRICT_ID, user.DistrictId ?.ToString() ?? string.Empty)
                 };
             return authClaims;
         }

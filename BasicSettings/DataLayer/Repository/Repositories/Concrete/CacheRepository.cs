@@ -1,18 +1,12 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
 {
-    public interface ICacheRepository
-    {
-        void SetValueToCache<TKey, Value>(TKey key, Value value, TimeSpan? timeSpan = null);
-        Value GetValueFromCache<TKey, Value>(TKey key);
-    }
-
     public class CacheRepository : ICacheRepository
     {
         private readonly IMemoryCache _memoryCache;
 
         public CacheRepository(IMemoryCache memoryCache)
         {
-            this._memoryCache = memoryCache;
+            _memoryCache = memoryCache;
         }
 
         public Value GetValueFromCache<TKey, Value>(TKey key)

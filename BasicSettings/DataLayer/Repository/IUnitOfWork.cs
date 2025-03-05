@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.DataLayer.Repository
+﻿using BasicSettings.DataLayer.Repository.Repositories.Concrete;
+
+namespace BasicSettings.DataLayer.Repository
 {
     public interface IUnitOfWork
     {
@@ -22,6 +24,7 @@
         ICustomeIdentityUserRepository CustomeIdentityUserRepository { get; }
         ICacheRepository CacheRepository { get; }
         IHttpContextAccessorCustome HttpContextAccessor { get; }
+        IAuthRepository AuthRepository { get; }
         #endregion repositories
     }
 }
