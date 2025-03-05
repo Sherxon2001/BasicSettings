@@ -20,7 +20,7 @@ namespace BasicSettings.Services.Client
             List<Tuple<string, object, ParameterType>> parametr = null,
             CancellationToken cancellationToken = default)
         {
-            var _state = StateModel<TResponse>.Create();
+            var _state = StateModel<TResponse>.CreateInstance();
             var request = new RestRequest(url, method);
 
             if (body is not null)

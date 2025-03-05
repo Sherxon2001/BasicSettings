@@ -1,6 +1,4 @@
-﻿using BasicSettings.DataLayer.Repository.Repositories.Concrete;
-
-namespace BasicSettings.DataLayer.Repository
+﻿namespace BasicSettings.DataLayer.Repository
 {
     public interface IUnitOfWork
     {
@@ -8,6 +6,7 @@ namespace BasicSettings.DataLayer.Repository
         IDbConnection DbConnection { get; }
         IDbContextTransaction BeginTransaction();
         Task SaveChangesAsync();
+        Task SaveChangesAsync(CancellationToken cancellationToken);
         IDbContextTransaction CurrentTransaction { get; }
         Task ExecuteInTransactionAsync(Func<Task> action);
         void Save();
@@ -20,11 +19,14 @@ namespace BasicSettings.DataLayer.Repository
         Task CommitAsync(CancellationToken cancellationToken);
         Task RollbackAsync(CancellationToken cancellationToken);
 
+
         #region repositories
         ICustomeIdentityUserRepository CustomeIdentityUserRepository { get; }
         ICacheRepository CacheRepository { get; }
         IHttpContextAccessorCustome HttpContextAccessor { get; }
-        IAuthRepository AuthRepository { get; }
+        IIdentityUserRepository IdentityUserRepository { get; }
+        ISystemTaskRepository SystemTaskRepository { get; }
+        IRoleProfilesRepository RoleProfilesRepository { get; }
         #endregion repositories
     }
 }

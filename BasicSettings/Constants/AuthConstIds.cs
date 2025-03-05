@@ -14,5 +14,9 @@
         public const string USER_ID = "TELEGRAM_ID";
 
         public const int ROLE_ADMINISTRATOR_ID = 1;
+
+        public const string SYSTEM_TASKS_MENU = "MENU";
+        public const string SYSTEM_TASKS_ACTION = "ACTION";
+        public const string SYSTEM_TASKS_SUB_MENU = "SUB_MENU";
     }
 }

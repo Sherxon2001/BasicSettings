@@ -1,6 +1,4 @@
-﻿using BasicSettings.Models.Additional;
-
-namespace BasicSettings.Services
+﻿namespace BasicSettings.Services
 {
     class ServiceManager : IServiceManager
     {
@@ -66,6 +64,19 @@ namespace BasicSettings.Services
                     _loggerService = GetService<ILoggerService>();
                 }
                 return _loggerService;
+            }
+        }
+
+        private IntegrationClient _httpClient;
+        public IntegrationClient HttpClient
+        {
+            get
+            {
+                if (_httpClient == null)
+                {
+                    _httpClient = GetService<IntegrationClient>();
+                }
+                return _httpClient;
             }
         }
     }

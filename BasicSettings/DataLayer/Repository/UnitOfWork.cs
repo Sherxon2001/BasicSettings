@@ -14,21 +14,31 @@ namespace BasicSettings.DataLayer.Repository
             this._serviceProvider = serviceProvider;
         }
 
+
+
+
+
+        #region repositories
+        public ISystemTaskRepository SystemTaskRepository { get => GetRepository<ISystemTaskRepository>(); }
+        public IIdentityUserRepository IdentityUserRepository { get => GetRepository<IIdentityUserRepository>(); }
+        public ICustomeIdentityUserRepository CustomeIdentityUserRepository { get => GetRepository<ICustomeIdentityUserRepository>(); }
+        public ICacheRepository CacheRepository { get => GetRepository<ICacheRepository>(); }
+        public IHttpContextAccessorCustome HttpContextAccessor { get => GetRepository<IHttpContextAccessorCustome>(); }
+        public IRoleProfilesRepository RoleProfilesRepository { get => GetRepository<IRoleProfilesRepository>(); }
+        #endregion repositories
+
+
+
+
         public ApplicationDbContext Context { get; set; }
         public Appsettings Appsettings { get; }
 
         public TRepository GetRepository<TRepository>() => _serviceProvider.GetRequiredService<TRepository>();
 
-        #region repositories
-        public IAuthRepository AuthRepository { get => GetRepository<IAuthRepository>(); }
-        public ICustomeIdentityUserRepository CustomeIdentityUserRepository { get => GetRepository<ICustomeIdentityUserRepository>(); }
-        public ICacheRepository CacheRepository { get => GetRepository<ICacheRepository>(); }
-        public IHttpContextAccessorCustome HttpContextAccessor { get => GetRepository<IHttpContextAccessorCustome>(); }
-        #endregion repositories
-
         public IDbContextTransaction BeginTransaction() => Context.Database.BeginTransaction();
 
         public async Task SaveChangesAsync() => await Context.SaveChangesAsync();
+        public async Task SaveChangesAsync(CancellationToken cancellationToken) => await Context.SaveChangesAsync(cancellationToken);
 
         public IDbContextTransaction CurrentTransaction => Context.Database.CurrentTransaction;
 
@@ -104,6 +114,5 @@ namespace BasicSettings.DataLayer.Repository
             if (Context.Database.CurrentTransaction != null)
                 await Context.Database.CurrentTransaction.RollbackAsync(cancellationToken);
         }
-
     }
 }

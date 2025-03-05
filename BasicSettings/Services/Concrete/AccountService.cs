@@ -15,7 +15,7 @@ namespace BasicSettings.Services.Concrete
 
         public async Task<StateModel<TokenDto>> RefreshToken(string refreshToken)
         {
-            var _state = StateModel<TokenDto>.Create();
+            var _state = StateModel<TokenDto>.CreateInstance();
             try
             {
                 var userId = _unitOfWork.HttpContextAccessor.GetUserId() ?? 0;
@@ -59,7 +59,7 @@ namespace BasicSettings.Services.Concrete
 
         public async Task<StateModel<TokenDto>> GetToken(LoginDtoI dtoI, CancellationToken cancellationToken)
         {
-            var _state = StateModel<TokenDto>.Create();
+            var _state = StateModel<TokenDto>.CreateInstance();
             try
             {
                 var user = await _unitOfWork.CustomeIdentityUserRepository.GetByUserName(dtoI.UserName);

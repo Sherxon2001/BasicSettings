@@ -18,7 +18,7 @@
             if (value?.Count() > 0)
                 return;
 
-            var systemTasks = _unitOfWork.AuthRepository.GetRoleProfilesByRoleId(roleId).Select(x => x.SystemTasks.ActionName).ToList();
+            var systemTasks = _unitOfWork.IdentityUserRepository.GetRoleProfilesByRoleId(roleId).Select(x => x.SystemTasks.ActionName).ToList();
 
             if (systemTasks?.Count == 0 || systemTasks is null)
                 return;

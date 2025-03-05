@@ -16,7 +16,8 @@
 
         public virtual void AddRange(IEnumerable<T> entities) => _unitOfWork.Context.Set<T>().AddRange(entities);
 
-        public Task AddRangeAsync(IEnumerable<T> entities) => _unitOfWork.Context.Set<T>().AddRangeAsync(entities);
+        public async Task AddRangeAsync(IEnumerable<T> entities) => await _unitOfWork.Context.Set<T>().AddRangeAsync(entities);
+        public async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken) => await _unitOfWork.Context.Set<T>().AddRangeAsync(entities, cancellationToken);
 
         public T? FirstOrDefault(Expression<Func<T, bool>>? predicate = null, bool tracking = false, params Expression<Func<T, object>>[] includes)
         {
@@ -49,6 +50,16 @@
         public IQueryable<T> Where(Expression<Func<T, bool>> predicate, bool tracking = false, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _unitOfWork.Context.Set<T>().Where(predicate);
+            if (!tracking)
+                query = query.AsNoTracking();
+            if (includes != null)
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            return query;
+        }
+
+        public IQueryable<T> AsQueryable(bool tracking = false, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _unitOfWork.Context.Set<T>();
             if (!tracking)
                 query = query.AsNoTracking();
             if (includes != null)

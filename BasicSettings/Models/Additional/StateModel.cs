@@ -6,7 +6,7 @@
         private string Message { get; set; }
         private T? Data { get; set; }
 
-        public static StateModel<T> Create(int code = StatusCodes.Status400BadRequest, string message = "", T data = default)
+        public static StateModel<T> CreateInstance(int code = StatusCodes.Status400BadRequest, string message = "", T data = default)
         {
             return new StateModel<T>
             {

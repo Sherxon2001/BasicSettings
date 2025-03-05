@@ -10,9 +10,11 @@
         Task AddAsycn(T entity);
         void AddRange(IEnumerable<T> entities);
         Task AddRangeAsync(IEnumerable<T> entities);
+        Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
         void Update(T entity);
         void UpdateRange(IEnumerable<T> entities);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
+        public IQueryable<T> AsQueryable(bool tracking = false, params Expression<Func<T, object>>[] includes);
     }
 }
