@@ -1,6 +1,4 @@
-﻿using BasicSettings.Models.Additional;
-
-namespace BasicSettings.Services.Concrete
+﻿namespace BasicSettings.Services.Concrete
 {
     public class AuthService : IAuthService
     {

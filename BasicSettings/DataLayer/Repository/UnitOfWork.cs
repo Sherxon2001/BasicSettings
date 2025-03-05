@@ -1,7 +1,4 @@
-﻿using BasicSettings.DataLayer.Repository.Repositories.Concrete;
-using BasicSettings.Models.Additional;
-
-namespace BasicSettings.DataLayer.Repository
+﻿namespace BasicSettings.DataLayer.Repository
 {
     internal class UnitOfWork : IUnitOfWork
     {

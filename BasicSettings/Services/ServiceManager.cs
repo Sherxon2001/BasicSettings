@@ -41,19 +41,6 @@
             }
         }
 
-        private IAccountService _accountService;
-        public IAccountService AccountService
-        {
-            get
-            {
-                if (_accountService == null)
-                {
-                    _accountService = GetService<IAccountService>();
-                }
-                return _accountService;
-            }
-        }
-
         private ILoggerService _loggerService;
         public ILoggerService LoggerService
         {

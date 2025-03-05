@@ -1,6 +1,4 @@
-﻿using BasicSettings.Constants;
-
-namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
 {
     public class IdentityUserRepository : RepositoryBase<CustomeIdentityUser>, IIdentityUserRepository
     {
