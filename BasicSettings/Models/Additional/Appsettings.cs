@@ -4,6 +4,7 @@
     {
         public Logging Logging { get; set; }
         public string AllowedHosts { get; set; }
+        public string[] AllowedOrigins { get; set; }
         public ConnectionStrings ConnectionStrings { get; set; }
         public AuthSettings AuthSettings { get; set; }
         public SwaggerSetting SwaggerSetting { get; set; }

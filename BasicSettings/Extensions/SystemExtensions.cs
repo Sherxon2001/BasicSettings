@@ -4,8 +4,8 @@
     {
         public static string ToUtf8(this string message)
         {
-            byte[] messageBytes = System.Text.Encoding.UTF8.GetBytes(message);
-            string utf8Message = System.Text.Encoding.UTF8.GetString(messageBytes);
+            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+            string utf8Message = Encoding.UTF8.GetString(messageBytes);
             return utf8Message;
         }
 
