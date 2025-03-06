@@ -21,13 +21,14 @@
 
 
         #region repositories
-        IUserRoleRepository UserRoleRepository { get; }
+        IUsersRolesRepository UsersRolesRepository { get; }
         IUserRepository UserRepository { get; }
         ICacheRepository CacheRepository { get; }
         IHttpContextAccessorCustome HttpContextAccessor { get; }
         IApplicantRoleRepository ApplicantRoleRepository { get; }
         ISystemTaskRepository SystemTaskRepository { get; }
         IRoleProfilesRepository RoleProfilesRepository { get; }
+        IRoleRepository RoleRepository { get; }
         #endregion repositories
     }
 }

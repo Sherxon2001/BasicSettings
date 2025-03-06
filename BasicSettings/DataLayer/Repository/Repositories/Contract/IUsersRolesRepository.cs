@@ -1,6 +1,6 @@
 ﻿namespace BasicSettings.DataLayer.Repository.Repositories.Contract
 {
-    public interface IUserRoleRepository : IRepositoryBase<UsersRoles>
+    public interface IUsersRolesRepository : IRepositoryBase<UsersRoles>
     {
     }
 }

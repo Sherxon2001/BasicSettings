@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace BasicSettings.Services.Concrete
+﻿namespace BasicSettings.Services.Concrete
 {
     public class AuthService : IAuthService
     {
@@ -105,7 +103,7 @@ namespace BasicSettings.Services.Concrete
 
         private async Task SetPermessionKey(ApplicantUser user, CancellationToken cancellationToken)
         {
-            var roles = await _unitOfWork.UserRoleRepository.Where(x => x.UserId == user.Id, false, i => i.Role).Select(x => x.Role).ToListAsync(cancellationToken);
+            var roles = await _unitOfWork.UsersRolesRepository.Where(x => x.UserId == user.Id, false, i => i.Role).Select(x => x.Role).ToListAsync(cancellationToken);
 
             if (roles.Count == 0)
                 throw new Exception("User has no role!");
@@ -124,7 +122,7 @@ namespace BasicSettings.Services.Concrete
 
         private async Task<List<Claim>> GetAuthClaims(ApplicantUser user, CancellationToken cancellationToken)
         {
-            var rolesList = await _unitOfWork.UserRoleRepository.Where(x => x.UserId == user.Id, false, i => i.Role).Select(x => x.Role.NormalizedName).ToListAsync(cancellationToken);
+            var rolesList = await _unitOfWork.UsersRolesRepository.Where(x => x.UserId == user.Id, false, i => i.Role).Select(x => x.Role.NormalizedName).ToListAsync(cancellationToken);
             var roles = string.Empty;
             rolesList.ForEach(x => roles += $"{x}::");
             var refreshToken = Guid.NewGuid().ToString();
@@ -332,13 +330,12 @@ namespace BasicSettings.Services.Concrete
             {
                 await CreateActionToRoleProfile(cancellationToken);
 
-                var roles = _unitOfWork.ApplicantRoleRepository.AsQueryable().ToList()
-                    .Select(x =>
-                    new RoleProfileDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    });
+                List<ApplicantRole> roles = new List<ApplicantRole>();
+
+                if (AuthConstIds.ROLE_ADMINISTRATOR_ID == _unitOfWork.HttpContextAccessor.GetUserRoleId())
+                {
+                    roles = await _unitOfWork.rolre.AsQueryable().ToListAsync(cancellationToken);
+                }
 
                 var menus = _unitOfWork.SystemTaskRepository.AsQueryable(includes: x => x.Children)
                     .Where(x => x.ParentId.Equals(null) || x.Type.Equals(AuthConstIds.SYSTEM_TASKS_MENU))

@@ -4,6 +4,8 @@
     {
         public static void AddBasicSettings(this IServiceCollection services, Appsettings appsettings)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddAuthentication(appsettings);
             services.AddCorsSettins(appsettings);
             services.AddService(appsettings);
