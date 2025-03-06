@@ -1,6 +1,6 @@
 ﻿namespace BasicSettings.Services
 {
-    class ServiceManager : IServiceManager
+    public class ServiceManager : IServiceManager
     {
         private readonly IServiceScopeFactory _serviceProvider;
 

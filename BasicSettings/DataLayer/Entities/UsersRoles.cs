@@ -6,8 +6,8 @@
         public int RoleId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public CustomeIdentityUser User { get; set; }
+        public ApplicantUser User { get; set; }
         [ForeignKey(nameof(RoleId))]
-        public CustomeIdentityRole Role { get; set; }
+        public ApplicantRole Role { get; set; }
     }
 }

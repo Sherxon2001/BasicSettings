@@ -23,7 +23,7 @@
             if (systemTasks?.Count == 0 || systemTasks is null)
                 return;
 
-            _unitOfWork.CacheRepository.SetValueToCache<int, List<string>>(roleId, systemTasks, TimeSpan.FromMinutes(_service.Appsettings.AuthSettings.Expires));
+            _unitOfWork.CacheRepository.SetValueToCache<int, List<string>>(roleId, systemTasks, TimeSpan.FromMinutes(_service.Appsettings.AuthSettings.TokenExpires));
         }
     }
 }

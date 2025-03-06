@@ -1,6 +1,6 @@
 ﻿namespace BasicSettings.DataLayer.Repository
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -17,11 +17,12 @@
 
         #region repositories
         public ISystemTaskRepository SystemTaskRepository { get => GetRepository<ISystemTaskRepository>(); }
-        public IIdentityUserRepository IdentityUserRepository { get => GetRepository<IIdentityUserRepository>(); }
+        public IApplicantRoleRepository ApplicantRoleRepository { get => GetRepository<IApplicantRoleRepository>(); }
         public IUserRepository UserRepository { get => GetRepository<IUserRepository>(); }
         public ICacheRepository CacheRepository { get => GetRepository<ICacheRepository>(); }
         public IHttpContextAccessorCustome HttpContextAccessor { get => GetRepository<IHttpContextAccessorCustome>(); }
         public IRoleProfilesRepository RoleProfilesRepository { get => GetRepository<IRoleProfilesRepository>(); }
+        public IUserRoleRepository UserRoleRepository { get => GetRepository<IUserRoleRepository>(); }
         #endregion repositories
 
 
@@ -39,7 +40,7 @@
 
         public IDbContextTransaction CurrentTransaction => Context.Database.CurrentTransaction;
 
-        public IDbConnection DbConnection => new SqlConnection(Appsettings.ConnectionStrings.ConnectionString);
+        public IDbConnection DbConnection => new SqlConnection(Appsettings.ConnectionStrings.DefaultConnection);
 
         public async Task ExecuteInTransactionAsync(Func<Task> action)
         {

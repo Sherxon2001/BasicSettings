@@ -4,8 +4,8 @@
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<CustomeIdentityUser> ApplicationUser { get; set; }
-        public DbSet<CustomeIdentityRole> CustomeIdentityRole { get; set; }
+        public DbSet<ApplicantUser> ApplicationUser { get; set; }
+        public DbSet<ApplicantRole> ApplicantRole { get; set; }
         public DbSet<UsersRoles> UsersRoles { get; set; }
         public DbSet<SystemTasks> SystemTasks { get; set; }
         public DbSet<RoleProfiles> RoleProfiles { get; set; }

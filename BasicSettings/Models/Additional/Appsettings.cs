@@ -21,12 +21,13 @@
         public string ValidIssuer { get; set; }
         public string ValidAudience { get; set; }
         public string SecretKey { get; set; }
-        public int Expires { get; set; }
+        public int UserExpiresInMonth { get; set; }
+        public int TokenExpires { get; set; }
     }
 
     public class ConnectionStrings
     {
-        public string ConnectionString { get; set; }
+        public string DefaultConnection { get; set; }
     }
 
     public class Logging

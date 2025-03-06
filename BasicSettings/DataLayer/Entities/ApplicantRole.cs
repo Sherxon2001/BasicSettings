@@ -1,6 +1,6 @@
 ﻿namespace BasicSettings.DataLayer.Entities
 {
-    public class CustomeIdentityRole
+    public class ApplicantRole
     {
         public int Id { get; set; }
         public string Name { get; set; }

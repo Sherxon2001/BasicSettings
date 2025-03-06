@@ -1,6 +1,6 @@
 ﻿namespace BasicSettings.DataLayer.Entities
 {
-    public class CustomeIdentityUser
+    public class ApplicantUser
     {
         public long Id { get; set; }
         public string UserName { get; set; }
@@ -13,7 +13,7 @@
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public bool TwoFactorEnabled { get; set; }
-        public DateTime? LastActiveDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public int AccessFailedCount { get; set; } = 0;
         public bool IsActive { get; set; }
         public int? RegionId { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.Services.Concrete
+﻿using System.Threading;
+
+namespace BasicSettings.Services.Concrete
 {
     public class AuthService : IAuthService
     {
@@ -16,42 +18,24 @@
             var _state = StateModel<TokenDto>.CreateInstance();
             try
             {
-                var user = await _unitOfWork.UserRepository.GetByUserName(dtoI.UserName);
-                if (user is null || !user.IsActive || user.LastActiveDate > DateTime.Now.AddMonths(-6))
-                    throw new Exception("User is not active!");
+                var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(x => x.UserName == dtoI.UserName);
 
                 if (!ValidPassword(dtoI, user))
                     throw new Exception("Password is incorrect!");
 
-                var authClaims = await GetAuthClaims(user);
-                var jwtSecurityToken = GetJwtSecurityToken(authClaims);
+                var user_jwtSecurityToken = await GetJwtSecurityTokenViaUser(user, cancellationToken);
+                user = user_jwtSecurityToken.Item2;
 
-                await SetPermessionKey(user);
-
-                user.RefreshToken = jwtSecurityToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
-                user.LastActiveDate = DateTime.Now;
-                _unitOfWork.UserRepository.Update(user);
-                await _unitOfWork.SaveAsync(cancellationToken);
-
-                var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                var token = new JwtSecurityTokenHandler().WriteToken(user_jwtSecurityToken.Item1);
 
                 _state.SetMessage(ConstIds.SUCCESSFULLY);
                 _state.SetCode(StatusCodes.Status200OK);
                 _state.SetData(new TokenDto
                 {
                     Token = token,
-                    ExpirationDate = jwtSecurityToken.ValidTo,
+                    ExpirationDate = user_jwtSecurityToken.Item1.ValidTo,
                     RefreshToken = user.RefreshToken,
-                    User = new CustomeIdentityUserDto
-                    {
-                        Id = user.Id,
-                        UserName = user.UserName,
-                        Email = user.Email,
-                        PhoneNumber = user.PhoneNumber,
-                        IsActive = user.IsActive,
-                        RegionId = user.RegionId,
-                        DistrictId = user.DistrictId
-                    }
+                    User = (ApplicantUserDto)user
                 });
             }
             catch (Exception ex)
@@ -62,40 +46,53 @@
             return _state;
         }
 
-        public async Task<StateModel<TokenDto>> RefreshToken(string refreshToken)
+        public async Task<Tuple<JwtSecurityToken, ApplicantUser>> GetJwtSecurityTokenViaUser(ApplicantUser user, CancellationToken cancellationToken)
+        {
+            UserValidated(user);
+
+            var authClaims = await GetAuthClaims(user, cancellationToken);
+            var jwtSecurityToken = GetJwtSecurityTokenViaAuthClaims(authClaims);
+
+            await SetPermessionKey(user, cancellationToken);
+
+            user.RefreshToken = jwtSecurityToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+            user.ModifiedDate = DateTime.Now;
+
+            _unitOfWork.UserRepository.Update(user);
+
+            await _unitOfWork.SaveAsync(cancellationToken);
+
+            return new Tuple<JwtSecurityToken, ApplicantUser>(jwtSecurityToken, user);
+        }
+
+        public void UserValidated(ApplicantUser user)
+        {
+            if (user is null || !user.IsActive || user.ModifiedDate > DateTime.Now.AddMonths(_service.Appsettings.AuthSettings.UserExpiresInMonth))
+                throw new Exception("User is not active!");
+        }
+
+        public async Task<StateModel<TokenDto>> RefreshToken(string refreshToken, CancellationToken cancellationToken)
         {
             var _state = StateModel<TokenDto>.CreateInstance();
             try
             {
                 var userId = _unitOfWork.HttpContextAccessor.GetUserId() ?? 0;
 
-                var user = await _unitOfWork.UserRepository.GetUserById(userId);
+                var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(x => x.Id == userId);
 
-                var authClaims = await GetAuthClaims(user);
-                var jwtSecurityToken = GetJwtSecurityToken(authClaims);
-                await SetPermessionKey(user);
-                user.RefreshToken = jwtSecurityToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
-                user.LastActiveDate = DateTime.Now;
-                _unitOfWork.UserRepository.Update(user);
-                await _unitOfWork.SaveAsync();
-                var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                var user_jwtSecurityToken = await GetJwtSecurityTokenViaUser(user, cancellationToken);
+                user = user_jwtSecurityToken.Item2;
+
+                var token = new JwtSecurityTokenHandler().WriteToken(user_jwtSecurityToken.Item1);
+
                 _state.SetMessage(ConstIds.SUCCESSFULLY);
                 _state.SetCode(StatusCodes.Status200OK);
                 _state.SetData(new TokenDto
                 {
                     Token = token,
-                    ExpirationDate = jwtSecurityToken.ValidTo,
+                    ExpirationDate = user_jwtSecurityToken.Item1.ValidTo,
                     RefreshToken = user.RefreshToken,
-                    User = new CustomeIdentityUserDto
-                    {
-                        Id = user.Id,
-                        UserName = user.UserName,
-                        Email = user.Email,
-                        PhoneNumber = user.PhoneNumber,
-                        IsActive = user.IsActive,
-                        RegionId = user.RegionId,
-                        DistrictId = user.DistrictId
-                    }
+                    User = (ApplicantUserDto)user
                 });
             }
             catch (Exception ex)
@@ -106,9 +103,9 @@
             return _state;
         }
 
-        private async Task SetPermessionKey(CustomeIdentityUser user)
+        private async Task SetPermessionKey(ApplicantUser user, CancellationToken cancellationToken)
         {
-            var roles = await _unitOfWork.UserRepository.GetRolesByUserId(user.Id);
+            var roles = await _unitOfWork.UserRoleRepository.Where(x => x.UserId == user.Id, false, i => i.Role).Select(x => x.Role).ToListAsync(cancellationToken);
 
             if (roles.Count == 0)
                 throw new Exception("User has no role!");
@@ -120,14 +117,14 @@
                     continue;
 
                 var userProfiles = await GetPermessionKey(role.Id);
-                var timeSpan = TimeSpan.FromMinutes(_service.Appsettings.AuthSettings.Expires);
+                var timeSpan = TimeSpan.FromMinutes(_service.Appsettings.AuthSettings.TokenExpires);
                 _unitOfWork.CacheRepository.SetValueToCache<int, string>(role.Id, userProfiles, timeSpan);
             }
         }
 
-        private async Task<List<Claim>> GetAuthClaims(CustomeIdentityUser user)
+        private async Task<List<Claim>> GetAuthClaims(ApplicantUser user, CancellationToken cancellationToken)
         {
-            var rolesList = await _unitOfWork.UserRepository.GetRolesByUserId(user.Id);
+            var rolesList = await _unitOfWork.UserRoleRepository.Where(x => x.UserId == user.Id, false, i => i.Role).Select(x => x.Role.NormalizedName).ToListAsync(cancellationToken);
             var roles = string.Empty;
             rolesList.ForEach(x => roles += $"{x}::");
             var refreshToken = Guid.NewGuid().ToString();
@@ -147,19 +144,19 @@
         private async Task<string> GetPermessionKey(int userRoleId)
         {
             var userProfiles = string.Empty;
-            var umumiy = await _unitOfWork.UserRepository.GetSystemTaskByRoleId(userRoleId);
+            var umumiy = _unitOfWork.RoleProfilesRepository.Where(x => x.RoleId == userRoleId, false, y => y.SystemTasks).Select(x => x.SystemTasks.ActionName);
             foreach (var s in umumiy)
                 userProfiles += s;
             return userProfiles;
         }
 
-        private JwtSecurityToken GetJwtSecurityToken(List<Claim> authClaims)
+        private JwtSecurityToken GetJwtSecurityTokenViaAuthClaims(List<Claim> authClaims)
         {
             try
             {
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_service.Appsettings.AuthSettings.SecretKey));
                 var token = new JwtSecurityToken(
-                    expires: DateTime.Now.AddMinutes(_service.Appsettings.AuthSettings.Expires),
+                    expires: DateTime.Now.AddMinutes(_service.Appsettings.AuthSettings.TokenExpires),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
@@ -171,7 +168,7 @@
             }
         }
 
-        private bool ValidPassword(LoginDtoI login, CustomeIdentityUser user)
+        private bool ValidPassword(LoginDtoI login, ApplicantUser user)
         {
             var passwordHash = GeneratePasswordHash(login.UserName, login.Password, user.SecurityStamp);
 
@@ -335,7 +332,7 @@
             {
                 await CreateActionToRoleProfile(cancellationToken);
 
-                var roles = _unitOfWork.IdentityUserRepository.GetRoleById()
+                var roles = _unitOfWork.ApplicantRoleRepository.AsQueryable().ToList()
                     .Select(x =>
                     new RoleProfileDto
                     {
