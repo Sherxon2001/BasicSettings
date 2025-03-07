@@ -1,6 +1,7 @@
 ﻿global using BasicSettings.Constants;
 global using BasicSettings.DataLayer.Entities;
 global using BasicSettings.DataLayer.Repository;
+global using BasicSettings.DataLayer.Repository.Repositories.Concrete;
 global using BasicSettings.DataLayer.Repository.Repositories.Contract;
 global using BasicSettings.Essentials.PageValidation;
 global using BasicSettings.Essentials.PathPrefixInsertDocumentFilter;

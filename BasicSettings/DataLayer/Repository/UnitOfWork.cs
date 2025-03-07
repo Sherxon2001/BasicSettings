@@ -1,6 +1,4 @@
-﻿using BasicSettings.DataLayer.Repository.Repositories.Concrete;
-
-namespace BasicSettings.DataLayer.Repository
+﻿namespace BasicSettings.DataLayer.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
