@@ -8,8 +8,6 @@
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IHelperService, HelperService>();
             services.AddScoped<ILoggerService, LoggerService>();
-            services.AddSingleton<RestClient>();
-            services.AddSingleton<IntegrationClient>();
         }
     }
 }

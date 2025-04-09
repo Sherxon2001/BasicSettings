@@ -2,14 +2,17 @@
 {
     public static class BaseExtensionsForProgram
     {
-        public static void AddBasicSettings(this IServiceCollection services, Appsettings appsettings)
+        public static void AddBasicSettings(this IServiceCollection services, WebApplicationBuilder builder)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            var appsettings = builder.GetAppsettings();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAuthentication(appsettings);
             services.AddCorsSettins(appsettings);
             services.AddService(appsettings);
             services.AddSwaggerSettings(appsettings);
+            services.AddCache(appsettings);
+            services.AddClient();
         }
     }
 }
