@@ -3,6 +3,7 @@
     public interface IRepositoryBase<T> where T : class
     {
         IDbConnection DbConnection { get; }
+        Task<IPageCollection<T>> GetList(Expression<Func<T, bool>> expression, int pageNumber = 1, int pageSize = 5, params Expression<Func<T, object>>[] includes);
         IQueryable<T> Where(Expression<Func<T, bool>> predicate, bool tracking = false, params Expression<Func<T, object>>[] includes);
         Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>>? predicate = null, bool tracking = false, params Expression<Func<T, object>>[] includes);
         T? FirstOrDefault(Expression<Func<T, bool>>? predicate = null, bool tracking = false, params Expression<Func<T, object>>[] includes);

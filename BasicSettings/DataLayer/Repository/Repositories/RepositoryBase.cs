@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories
+﻿using BasicSettings.Extensions;
+
+namespace BasicSettings.DataLayer.Repository.Repositories
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
@@ -10,6 +12,25 @@
         }
 
         public IDbConnection DbConnection => _unitOfWork.DbConnection;
+
+        public async Task<IPageCollection<T>> GetList(Expression<Func<T, bool>> expression, int pageNumber = 1, int pageSize = 5, params Expression<Func<T, object>>[] includes)
+        {
+            const int DefaultPageNumber = 1;
+            const int DefaultPageSize = 5;
+            const int MinPageSize = 1;
+            const int MaxPageSize = 5;
+
+            pageNumber = pageNumber < DefaultPageNumber ? DefaultPageNumber : pageNumber;
+            pageSize = pageSize < MinPageSize ? DefaultPageSize : pageSize;
+            pageSize = pageSize > MaxPageSize ? MaxPageSize : pageSize;
+
+            IQueryable<T> query = _unitOfWork.Context.Set<T>().AsNoTracking().Where(expression);
+            if (includes != null)
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+            var response = await query.AsNoTracking().ToPagedListAsync(pageNumber, pageSize);
+            return response;
+        }
 
         public virtual void Add(T entity) => _unitOfWork.Context.Set<T>().Add(entity);
         public async Task AddAsycn(T entity) => await _unitOfWork.Context.Set<T>().AddAsync(entity);
