@@ -5,7 +5,7 @@
         public static void AddClient(this IServiceCollection services)
         {
             services.AddSingleton<RestClient>();
-            services.AddSingleton<IntegrationClient>();
+            services.AddScoped<IntegrationClient>();
         }
     }
 }

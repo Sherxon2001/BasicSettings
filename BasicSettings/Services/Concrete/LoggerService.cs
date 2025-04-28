@@ -2,8 +2,8 @@
 {
     public class LoggerService : ILoggerService
     {
-        private readonly ILogger _logger;
-        public LoggerService(ILogger logger)
+        private readonly Microsoft.Extensions.Logging.ILogger<LoggerService> _logger;
+        public LoggerService(Microsoft.Extensions.Logging.ILogger<LoggerService> logger)
         {
             _logger = logger;
         }
