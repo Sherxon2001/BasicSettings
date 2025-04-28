@@ -15,14 +15,14 @@
             return scope.ServiceProvider.GetRequiredService<TService>();
         }
 
-        private Appsettings _appsettings;
-        public Appsettings Appsettings
+        private AppSettings _appsettings;
+        public AppSettings Appsettings
         {
             get
             {
                 if (_appsettings == null)
                 {
-                    _appsettings = GetService<Appsettings>();
+                    _appsettings = GetService<AppSettings>();
                 }
                 return _appsettings;
             }

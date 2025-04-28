@@ -9,7 +9,7 @@
         public UnitOfWork
         (
             ApplicationDbContext dbContext,
-            Appsettings appsettings,
+            AppSettings appsettings,
             IServiceProvider serviceProvider,
             IMemoryCache memoryCache,
             IHttpContextAccessor httpContextAccessor
@@ -119,7 +119,7 @@
 
 
         public ApplicationDbContext Context { get; set; }
-        public Appsettings Appsettings { get; }
+        public AppSettings Appsettings { get; }
 
         public IDbContextTransaction BeginTransaction()
         {

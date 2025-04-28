@@ -1,9 +1,10 @@
 ﻿namespace BasicSettings.Models.Additional
 {
-    public class Appsettings
+    public class AppSettings
     {
         public Logging Logging { get; set; }
         public string AllowedHosts { get; set; }
+        public string AllowCorsSpecific { get; set; }
         public string[] AllowedOrigins { get; set; }
         public ConnectionStrings ConnectionStrings { get; set; }
         public AuthSettings AuthSettings { get; set; }
@@ -12,7 +13,7 @@
 
     public class SwaggerSetting
     {
-        public bool PrefixIsEnable { get; set; }
+        public bool IsSwaggerEnable { get; set; }
         public string Prefix { get; set; }
     }
 

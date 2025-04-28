@@ -2,7 +2,7 @@
 {
     public static class ServicesExtentions
     {
-        public static void AddService(this IServiceCollection services, Appsettings appsettings)
+        public static void AddService(this IServiceCollection services, AppSettings appsettings)
         {
             services.AddScoped<IServiceManager, ServiceManager>();
             services.AddScoped<IAuthService, AuthService>();

@@ -2,7 +2,7 @@
 {
     public static class AuthExtentions
     {
-        public static void AddAuthentication(this IServiceCollection services, Appsettings appsettings)
+        public static void AddAuthentication(this IServiceCollection services, AppSettings appsettings)
         {
             services.AddAuthentication(x =>
             {

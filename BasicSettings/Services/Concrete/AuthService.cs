@@ -334,7 +334,7 @@
 
                 if (AuthConstIds.ROLE_ADMINISTRATOR_ID == _unitOfWork.HttpContextAccessor.GetUserRoleId())
                 {
-                    roles = await _unitOfWork.rolre.AsQueryable().ToListAsync(cancellationToken);
+                    roles = await _unitOfWork.RoleRepository.AsQueryable().ToListAsync(cancellationToken);
                 }
 
                 var menus = _unitOfWork.SystemTaskRepository.AsQueryable(includes: x => x.Children)

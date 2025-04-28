@@ -2,11 +2,11 @@
 {
     public static class CorsExtentions
     {
-        public static void AddCorsSettins(this IServiceCollection services, Appsettings appsettings)
+        public static void AddCorsSettins(this IServiceCollection services, AppSettings appsettings)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowSpecific", builder =>
+                options.AddPolicy(appsettings.AllowCorsSpecific, builder =>
                 {
                     builder.WithOrigins(appsettings.AllowedOrigins.ToArray())
                         .AllowAnyMethod()

@@ -2,7 +2,7 @@
 {
     public static class SwaggerExtentions
     {
-        public static void AddSwaggerSettings(this IServiceCollection services, Appsettings appsettings)
+        public static void AddSwaggerSettings(this IServiceCollection services, AppSettings appsettings)
         {
             services.AddSwaggerGen(c =>
             {
@@ -33,7 +33,7 @@
                     },
                 });
 
-                if (appsettings.SwaggerSetting.PrefixIsEnable)
+                if (!string.IsNullOrEmpty(appsettings.SwaggerSetting.Prefix))
                     c.DocumentFilter<PathPrefixInsertDocumentFilter>(appsettings.SwaggerSetting.Prefix);
             });
         }

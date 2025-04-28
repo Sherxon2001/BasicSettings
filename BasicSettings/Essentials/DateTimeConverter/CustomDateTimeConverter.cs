@@ -1,16 +1,16 @@
 ﻿namespace BasicSettings.Essentials.DateTimeConverter
 {
-    public class CustomDateTimeConverter : JsonConverter<DateTime?>
+    public class CustomDateTimeConverter : System.Text.Json.Serialization.JsonConverter<DateTime?>
     {
         private readonly string[] _readFormats = { "dd.MM.yyyy H:mm:ss", "dd.MM.yyyy" };
-        private readonly string _writeFormatWithTime = "yyyy-MM-ddTHH:mm:ss";
-        private readonly string _writeFormatWithoutTime = "yyyy-MM-dd";
+        private readonly string _writeFormatWithTime = "dd.MM.yyyy";
+        private readonly string _writeFormatWithoutTime = "dd.MM.yyyy";
 
-        public override DateTime? ReadJson(JsonReader reader, Type objectType, DateTime? existingValue, bool hasExistingValue, Newtonsoft.Json.JsonSerializer serializer)
+        public override DateTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonToken.String)
+            if (reader.TokenType == JsonTokenType.String)
             {
-                var dateString = reader.Value.ToString();
+                var dateString = reader.GetString();
                 foreach (var format in _readFormats)
                 {
                     if (DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date))
@@ -22,17 +22,18 @@
             return null;
         }
 
-        public override void WriteJson(JsonWriter writer, DateTime? value, Newtonsoft.Json.JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, DateTime? value, JsonSerializerOptions options)
         {
             if (value.HasValue)
             {
                 var format = value.Value.TimeOfDay.TotalSeconds == 0 ? _writeFormatWithoutTime : _writeFormatWithTime;
-                writer.WriteValue(value.Value.ToString(format));
+                writer.WriteStringValue(value.Value.ToString(format));
             }
             else
             {
-                writer.WriteNull();
+                writer.WriteNullValue();
             }
         }
+
     }
 }
