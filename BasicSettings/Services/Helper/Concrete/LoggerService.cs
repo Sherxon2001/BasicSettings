@@ -1,9 +1,9 @@
-﻿namespace BasicSettings.Services.Concrete
+﻿namespace BasicSettings.Services.Helper.Concrete
 {
     public class LoggerService : ILoggerService
     {
-        private readonly Microsoft.Extensions.Logging.ILogger<LoggerService> _logger;
-        public LoggerService(Microsoft.Extensions.Logging.ILogger<LoggerService> logger)
+        private readonly ILogger<LoggerService> _logger;
+        public LoggerService(ILogger<LoggerService> logger)
         {
             _logger = logger;
         }
@@ -17,7 +17,7 @@
         {
             var className = GetClassName(ex);
             var methodName = GetMethodName(ex);
-            var message = $"\n{ex.Message}\nClass: {className}\nMethod: {methodName}\n{ex.InnerException}";
+            var message = $"\n{ex?.Message}\nClass: {className}\nMethod: {methodName}\n{ex?.InnerException}";
 
             try
             {
@@ -35,17 +35,17 @@
         private string GetClassName(Exception ex)
         {
             var st = new StackTrace(ex, true);
-            var frame = st.GetFrame(0);
-            var method = frame.GetMethod();
-            return method.DeclaringType.FullName;
+            var frame = st?.GetFrame(0);
+            var method = frame?.GetMethod();
+            return method?.DeclaringType?.FullName;
         }
 
         private string GetMethodName(Exception ex)
         {
             var st = new StackTrace(ex, true);
-            var frame = st.GetFrame(0);
-            var method = frame.GetMethod();
-            return method.Name;
+            var frame = st?.GetFrame(0);
+            var method = frame?.GetMethod();
+            return method?.Name;
         }
     }
 }

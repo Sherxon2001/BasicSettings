@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
+﻿using BasicSettings.DataLayer.Repository.Repositories.Role.Concrete;
+
+namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
 {
     public class RoleRepository : RepositoryBase<ApplicantRole>, IRoleRepository
     {

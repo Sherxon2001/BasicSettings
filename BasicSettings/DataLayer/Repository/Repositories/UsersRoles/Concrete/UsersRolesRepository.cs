@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.UsersRoles.Concrete
 {
     public class UsersRolesRepository : RepositoryBase<UsersRoles>, IUsersRolesRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.Services.Concrete
+﻿namespace BasicSettings.Services.Helper.Concrete
 {
     public class HelperService : IHelperService
     {
@@ -7,8 +7,8 @@
 
         public HelperService(IUnitOfWork unitOfWork, IServiceManager service)
         {
-            this._unitOfWork = unitOfWork;
-            this._service = service;
+            _unitOfWork = unitOfWork;
+            _service = service;
         }
 
         public void UpdatePermissionCheckFromCache(int roleId)

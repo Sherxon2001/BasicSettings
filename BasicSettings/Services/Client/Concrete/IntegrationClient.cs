@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.Services.Client
+﻿using BasicSettings.Services.Helper.Concrete;
+
+namespace BasicSettings.Services.Client.Concrete
 {
     public class IntegrationClient
     {
@@ -16,8 +18,8 @@
             Method method = Method.Get,
             Tuple<object, string> body = null,
             List<Tuple<string, object, ParameterType>> parametr = null,
-            CancellationToken cancellationToken = default)
-        {
+            CancellationToken cancellationToken = default
+        ){
             var _state = StateModel<TResponse>.CreateInstance();
             var request = new RestRequest(url, method);
 

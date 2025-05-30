@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories.Contract
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.HttpContextAccessor.Concrete
 {
     public interface IHttpContextAccessorCustome
     {

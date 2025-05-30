@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.ApplicantRole.Concrete
 {
     public class ApplicantRoleRepository : RepositoryBase<ApplicantRole>, IApplicantRoleRepository
     {
@@ -6,7 +6,7 @@
 
         public ApplicantRoleRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            this._unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿namespace BasicSettings.DataLayer.Repository
+﻿using BasicSettings.DataLayer.Repository.Repositories.HttpContextAccessor.Concrete;
+using BasicSettings.DataLayer.Repository.Repositories.Role.Concrete;
+using BasicSettings.DataLayer.Repository.Repositories.RoleProfiles.Concrete;
+using BasicSettings.DataLayer.Repository.Repositories.SystemTask.Concrete;
+
+namespace BasicSettings.DataLayer.Repository
 {
     public interface IUnitOfWork
     {

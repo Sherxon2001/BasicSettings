@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.Services.Concrete
+﻿namespace BasicSettings.Services.Auth.Concrete
 {
     public class AuthService : IAuthService
     {
@@ -7,8 +7,8 @@
 
         public AuthService(IServiceManager service, IUnitOfWork unitOfWork)
         {
-            this._service = service;
-            this._unitOfWork = unitOfWork;
+            _service = service;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<StateModel<TokenDto>> GetToken(LoginDtoI dtoI, CancellationToken cancellationToken)
@@ -116,7 +116,7 @@
 
                 var userProfiles = await GetPermessionKey(role.Id);
                 var timeSpan = TimeSpan.FromMinutes(_service.Appsettings.AuthSettings.TokenExpires);
-                _unitOfWork.CacheRepository.SetValueToCache<int, string>(role.Id, userProfiles, timeSpan);
+                _unitOfWork.CacheRepository.SetValueToCache(role.Id, userProfiles, timeSpan);
             }
         }
 

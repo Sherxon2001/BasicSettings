@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.HttpContextAccessor.Concrete
 {
     public class HttpContextAccessorCustome : IHttpContextAccessorCustome
     {
@@ -17,7 +17,7 @@
             if (!_user?.Identity?.IsAuthenticated ?? true)
                 return null;
 
-            if (Int32.TryParse(_user?.FindFirst(AuthConstIds.USER_ROLE_ID)?.Value, out int i))
+            if (int.TryParse(_user?.FindFirst(AuthConstIds.USER_ROLE_ID)?.Value, out int i))
                 return i;
             return null;
         }
@@ -55,7 +55,7 @@
             if (!_user?.Identity?.IsAuthenticated ?? true)
                 return null;
 
-            if (Int64.TryParse(_user?.FindFirst(AuthConstIds.USER_ID)?.Value, out Int64 i))
+            if (long.TryParse(_user?.FindFirst(AuthConstIds.USER_ID)?.Value, out long i))
                 return i;
             return null;
         }
@@ -65,7 +65,7 @@
             if (!_user?.Identity?.IsAuthenticated ?? true)
                 return null;
 
-            if (Int32.TryParse(_user?.FindFirst(AuthConstIds.USER_DISTRICT_ID)?.Value, out Int32 i))
+            if (int.TryParse(_user?.FindFirst(AuthConstIds.USER_DISTRICT_ID)?.Value, out int i))
                 return i;
             return null;
         }
@@ -85,7 +85,7 @@
             if (!_user?.Identity?.IsAuthenticated ?? false)
                 return 0;
 
-            if (Int64.TryParse(_user?.FindFirst(AuthConstIds.USER_REGION_ID)?.Value, out Int64 i))
+            if (long.TryParse(_user?.FindFirst(AuthConstIds.USER_REGION_ID)?.Value, out long i))
                 return i;
             return null;
         }

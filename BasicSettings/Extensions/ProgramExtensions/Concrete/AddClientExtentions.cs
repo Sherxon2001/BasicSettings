@@ -1,4 +1,6 @@
-﻿namespace BasicSettings.Extensions.ProgramExtensions
+﻿using BasicSettings.Services.Client.Concrete;
+
+namespace BasicSettings.Extensions.ProgramExtensions
 {
     public static class AddClientExtentions
     {

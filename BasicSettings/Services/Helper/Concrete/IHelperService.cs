@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.Services.Contract
+﻿namespace BasicSettings.Services.Helper.Concrete
 {
     public interface IHelperService
     {

@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.User.Concrete
 {
     public class UserRepository : RepositoryBase<ApplicantUser>, IUserRepository
     {

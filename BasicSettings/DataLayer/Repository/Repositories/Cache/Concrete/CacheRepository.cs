@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.DataLayer.Repository.Repositories.Concrete
+﻿namespace BasicSettings.DataLayer.Repository.Repositories.Cache.Concrete
 {
     public class CacheRepository : ICacheRepository
     {

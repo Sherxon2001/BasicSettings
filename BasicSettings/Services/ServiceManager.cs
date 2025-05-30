@@ -1,4 +1,7 @@
-﻿namespace BasicSettings.Services
+﻿using BasicSettings.Services.Client.Concrete;
+using BasicSettings.Services.Helper.Concrete;
+
+namespace BasicSettings.Services
 {
     public class ServiceManager : IServiceManager
     {

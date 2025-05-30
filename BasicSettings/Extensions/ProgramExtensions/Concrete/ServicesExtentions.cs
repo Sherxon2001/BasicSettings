@@ -1,4 +1,7 @@
-﻿namespace BasicSettings.Extensions.ProgramExtensions
+﻿using BasicSettings.Services.Auth.Concrete;
+using BasicSettings.Services.Helper.Concrete;
+
+namespace BasicSettings.Extensions.ProgramExtensions
 {
     public static class ServicesExtentions
     {

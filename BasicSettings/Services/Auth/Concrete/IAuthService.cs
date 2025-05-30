@@ -1,4 +1,4 @@
-﻿namespace BasicSettings.Services.Contract
+﻿namespace BasicSettings.Services.Auth.Concrete
 {
     public interface IAuthService
     {
